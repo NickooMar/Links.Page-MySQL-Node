@@ -6,10 +6,12 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session');
 const passport = require('passport');
+const dotenv = require('dotenv')
 
 const { database } = require('./keys'); // Desde ese archivo tan solo importo la propiedad database
 
 
+dotenv.config();
 
 //INICIO
 const app = express();
@@ -30,7 +32,7 @@ app.set('view engine', '.hbs');
 
 //Middlewares
 app.use(session({
-    secret:'nicomysqlnodesesion',
+    secret: process.env.EXPRESS_SECRET,
     resave: false,
     saveUninitialized: false,
     store: new MySQLStore(database) //para guardar la sesion dentro de la base de datos tengo que importar otro modulo
